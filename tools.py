@@ -1,17 +1,19 @@
 from langchain_core.tools import tool
 import json, datetime
 
+FILE_NAME = 'inbox.json'
+
 def get_dummy_data():
-    with open('inbox.json', 'r') as file:
+    with open(FILE_NAME, 'r') as file:
         data = json.load(file)
     return data
 
 def modify_dummy_data(data):
-    with open('inbox.json', 'w') as file:
+    with open(FILE_NAME, 'w') as file:
         json.dump(data, file, ensure_ascii=False)
         
 @tool
-def get_unread():
+def get_unread()->list:
     """
     Tool to get the unread mails from the user inbox.
     If you need mails from a specific contact, prefer using the get_emails_from_contact tool.
@@ -21,7 +23,7 @@ def get_unread():
     return filtered
 
 @tool
-def get_contact_list():
+def get_contact_list()->list:
     """
     Tool to get the contact list from the user inbox containing the name and email address.
     """
@@ -29,7 +31,7 @@ def get_contact_list():
 
 
 @tool
-def get_emails_from_contact(email_address: str):
+def get_emails_from_contact(email_address: str)->list:
     """
     Tool to get the emails from a specific contact. The email_address should be a string.
     In case you don't have the email address, you can use the get_contact_list tool to get the list of contacts.
@@ -40,7 +42,7 @@ def get_emails_from_contact(email_address: str):
 
 
 @tool
-def get_sended_emails(email_address: str = None):
+def get_sended_emails(email_address: str = None)->list:
     """
     Tool to get the sended emails from the user inbox.
     If email_address is provided, the tool will return the sended emails to that specific email address.
@@ -54,7 +56,7 @@ def get_sended_emails(email_address: str = None):
 
 
 @tool
-def send_email(email_address: str, subject:str, message: str):
+def send_email(email_address: str, subject:str, message: str)->str:
     """
     Tool to send an email to a specific email address.
     Always ask the user for the message or show it to him if you write it. You can provide the subject if needed.
@@ -83,7 +85,7 @@ def send_email(email_address: str, subject:str, message: str):
     return f"Email sent to {email_address}"
 
 @tool
-def respond_to_email(email_id: int, message: str):
+def respond_to_email(email_id: int, message: str)->str:
     """
     Tool to respond to a specific email. You should provide the email_id.
     Always ask the user for the message or show it to him if you write it.

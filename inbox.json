@@ -60,7 +60,7 @@
       "id": 2,
       "subject": "Reunión de equipo",
       "date": "2024-11-06T10:05:00",
-      "read": true,
+      "read": false,
       "sender": {
         "email": "sebastian.rodriguez@huemulsolutions.com",
         "is_user": false
@@ -74,7 +74,7 @@
       "id": 1,
       "subject": "Entrega del proyecto",
       "date": "2024-11-04T11:39:00",
-      "read": true,
+      "read": false,
       "sender": { "email": "marcelo.vargas@udd.com", "is_user": false },
       "to": "matias.barrera@huemulsolutions.com",
       "content": "Adjunto los cambios solicitados para el proyecto.",

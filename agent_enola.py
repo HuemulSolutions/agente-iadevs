@@ -1,11 +1,11 @@
 from langgraph.graph import StateGraph, END
+from langgraph.graph.state import CompiledStateGraph
 from langchain_core.prompts import ChatPromptTemplate
 from typing import Annotated, Optional
 from typing_extensions import TypedDict
 from langgraph.graph.message import AnyMessage, add_messages
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import AzureChatOpenAI
-from langchain_ollama import ChatOllama
 from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
 from tools import tools
 import uuid
@@ -17,6 +17,11 @@ from dotenv import load_dotenv
 
 import os
 load_dotenv()
+
+NOMBRE_AGENTE = "Demo Agente UDD"
+APP_ID = "enola-demo-udd"
+USER_ID = "matias.barrera"
+CHANNEL_ID = "console"
 
 model = "gpt4-0"
 temperature = 0
@@ -36,7 +41,7 @@ class State(TypedDict):
     tool_call: Optional[AIMessage] = None
     
 # NODO AGENTE
-def agent_node(state, config):
+def agent_node(state: State, config:dict) -> State:
     print('NODO AGENTE')
     ########################################################
     # TRACKING ENOLA
@@ -96,7 +101,7 @@ La conversación es la siguiente:
 
 
 # NODO DECISIÓN
-def should_continue(state):
+def should_continue(state: State) -> str:
     print('NODO DECISIÓN')
     if state.get('tool_call'):
         return 'tool'
@@ -104,7 +109,7 @@ def should_continue(state):
     
 
 # NODO HERRAMIENTA
-def tool_execution(state, config):
+def tool_execution(state: State, config: dict) -> State:
     print('NODO HERRAMIENTA')
     ########################################################
     # TRACKING ENOLA
@@ -152,7 +157,7 @@ def tool_execution(state, config):
     return state
 
 
-def create_graph():
+def create_graph()-> CompiledStateGraph:
     graph = StateGraph(State)
 
 
@@ -172,7 +177,8 @@ def create_graph():
     compiled_graph = graph.compile()
     return compiled_graph
 
-def execute_graph(graph, messages, internal_messages, tools, tracking):
+def execute_graph(graph: CompiledStateGraph, messages: list,
+                  internal_messages: list, tools: list, tracking: Tracking)-> tuple:
     state = {
         'messages': messages,
         'internal_messages': internal_messages,
@@ -187,14 +193,14 @@ def execute_graph(graph, messages, internal_messages, tools, tracking):
     return output, tracking
 
 
-def conversation_(user_input, messages, internal_messages):
+def conversation_(user_input: str, messages: list, internal_messages: list)-> tuple:
     # INICIANDO TRACKING ENOLA
     tracking = Tracking(
                 token=os.getenv("ENOLA_TOKEN_AGENTE"),
-                name="Demo Agente UDD",
-                app_id="enola-demo-udd",
-                user_id="matias.barrera",
-                channel_id="console",
+                name=NOMBRE_AGENTE,
+                app_id=APP_ID,
+                user_id=USER_ID,
+                channel_id=CHANNEL_ID,
                 is_test=True,
                 session_id=str(uuid.uuid4()),
                 message_input=user_input
@@ -218,7 +224,7 @@ def conversation_(user_input, messages, internal_messages):
     return messages, internal_messages, tracking.enola_id
 
 
-def user_evaluation(enola_id):
+def user_evaluation(enola_id: str)-> None:
     user_eval = input("Del 1 al 5, ¿qué tan útil fue la respuesta?: ")
     try:
         user_eval = int(user_eval)
@@ -233,13 +239,12 @@ def user_evaluation(enola_id):
     eval = evaluation.Evaluation(
         token=os.getenv("ENOLA_TOKEN_AGENTE"),
         eval_type=EvalType.USER,
-        user_id="udd_demo@huemulsolutions.com",
-        user_name="udd_demo",
+        user_id=USER_ID,
     )
     eval.add_evaluation_by_level(
         enola_id=enola_id, # Se obtiene el enola_id de la evaluación
         eval_id="evaluacion general 0",
-        level=1,
+        level=user_eval,
         comment=user_comment,
     )
     _ = eval.execute()
