@@ -1,0 +1,112 @@
+{
+  "inbox": [
+    {
+      "id": 5,
+      "subject": "Vacaciones",
+      "date": "2024-11-09T10:30:00",
+      "read": true,
+      "sender": {
+        "email": "matias.barrera@huemulsolutions.com",
+        "is_user": true
+      },
+      "to": "sebastian.rodriguez@huemulsolutions.com",
+      "content": "Hola Seba, cómo estás? Sobre las vacaciones de este año, me gustaría tomarlas en la primera quincena de enero. Qué te parece? Saludos!",
+      "attachments": [],
+      "replies": []
+    },
+    {
+      "id": 4,
+      "subject": "Problemas con base de datos",
+      "date": "2024-11-09T10:20:00",
+      "read": true,
+      "sender": {
+        "email": "constanza.hasse@huemulsolutions.com",
+        "is_user": false
+      },
+      "to": "matias.barrera@huemulsolutions.com",
+      "content": "Hola Matias, espero que estés bien. Te escribo para comentarte que hemos tenido problemas con la base de datos del proyecto de la semana pasada, te comparto un pantallazo del error. Puedes revisarlo por favor? Saludos!",
+      "attachments": ["screenshot.png"],
+      "replies": [
+        {
+          "id": 1,
+          "subject": "Re: Problemas con base de datos",
+          "date": "2024-12-04T11:28:12",
+          "read": true,
+          "sender": {
+            "email": "matias.barrera@huemulsolutions.com",
+            "is_user": true
+          },
+          "to": "constanza.hasse@huemulsolutions.com",
+          "content": "Hola Constanza, gracias por informarme. Voy a estar revisando eso durante el día. Saludos!",
+          "attachments": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "Fiesta de fin de año",
+      "date": "2024-11-09T08:40:00",
+      "read": false,
+      "sender": {
+        "email": "eduardo.jofre@huemulsolutions.com",
+        "is_user": false
+      },
+      "to": "matias.barrera@huemulsolutions.com",
+      "content": "Están todos invitados a la fiesta de fin de año el próximo viernes 27 de diciembre!. El lugar será en el salón de eventos de la empresa. Por favor confirmar asistencia. Saludos!",
+      "attachments": [],
+      "replies": []
+    },
+    {
+      "id": 2,
+      "subject": "Reunión de equipo",
+      "date": "2024-11-06T10:05:00",
+      "read": true,
+      "sender": {
+        "email": "sebastian.rodriguez@huemulsolutions.com",
+        "is_user": false
+      },
+      "to": "matias.barrera@huemulsolutions.com",
+      "content": "Hola equipo, les recuerdo que mañana tenemos reunión a las 10 AM.",
+      "attachments": ["agenda.pdf"],
+      "replies": []
+    },
+    {
+      "id": 1,
+      "subject": "Entrega del proyecto",
+      "date": "2024-11-04T11:39:00",
+      "read": true,
+      "sender": { "email": "marcelo.vargas@udd.com", "is_user": false },
+      "to": "matias.barrera@huemulsolutions.com",
+      "content": "Adjunto los cambios solicitados para el proyecto.",
+      "attachments": ["cambios.xlsx"],
+      "replies": []
+    }
+  ],
+  "contacts": [
+    {
+      "email": "sebastian.rodriguez@huemulsolutions.com",
+      "name": "Sebastián Rodríguez",
+      "internal": true
+    },
+    {
+      "email": "eduardo.jofre@huemulsolutions.com",
+      "name": "Eduardo Jofré",
+      "internal": true
+    },
+    {
+      "email": "constanza.hasse@huemulsolutions.com",
+      "name": "Constanza Hasse",
+      "internal": true
+    },
+    {
+      "email": "marcelo.vargas@udd.com",
+      "name": "Marcelo Vargas",
+      "internal": false
+    },
+    {
+      "email": "sofia.flores@aws.com",
+      "name": "Sofía Flores",
+      "internal": false
+    }
+  ]
+}
