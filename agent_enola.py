@@ -12,7 +12,7 @@ import uuid
 import datetime, json
 from enola.tracking import Tracking
 from enola import evaluation
-from enola.enola_types import EvalType
+from enola.enola_types import EvalType, ErrOrWarnKind
 from dotenv import load_dotenv
 
 import os
@@ -134,7 +134,9 @@ def tool_execution(state: State, config: dict) -> State:
             success = False
             # Añadiendo error al tracking
             step.add_error(
-                message=f"Error al ejecutar la herramienta {function_name} con los argumentos {args}, error: {e}"
+                id=str(uuid.uuid4()),
+                message=f"Error al ejecutar la herramienta {function_name} con los argumentos {args}, error: {e}",
+                kind=ErrOrWarnKind.INTERNAL_CONTROLLED,
             )
         else:
             # Añadiendo resultado al tracking
@@ -145,7 +147,9 @@ def tool_execution(state: State, config: dict) -> State:
         success = False
         # Añadiendo error al tracking
         step.add_error(
-            message=f"No se encontró la herramienta {function_name}"
+            id=str(uuid.uuid4()),
+            message=f"No se encontró la herramienta {function_name}",
+            kind=ErrOrWarnKind.INTERNAL_CONTROLLED,
         )
         state['internal_messages'] = SystemMessage(content=f"No se encontró la herramienta {function_name}")
     state['tool_call'] = None
