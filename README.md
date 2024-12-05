@@ -3,6 +3,7 @@
 Este repositorio contiene ejemplos prácticos sencillos que muestran la utilización de la librería **Enola AI**, una herramienta que permite la observabilidad de proyectos y desarrollos con modelos de inteligencia artificial generativa.
 
 ### Instalación de librerías
+*Se recomienda realizar en una ambiente aislado (venv, container, etc) para evitar conflictos.*
 El archivo requirements.txt contiene las librerías a instalar para poder ejecutar el código.
 Se puede hacer con el comando ```pip install -r requirements.txt```.
 

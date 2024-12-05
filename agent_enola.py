@@ -197,7 +197,7 @@ def execute_graph(graph: CompiledStateGraph, messages: list,
     return output, tracking
 
 
-def conversation_(user_input: str, messages: list, internal_messages: list)-> tuple:
+def conversation_(user_input: str, messages: list, internal_messages: list, session_id: str)-> tuple:
     # INICIANDO TRACKING ENOLA
     tracking = Tracking(
                 token=os.getenv("ENOLA_TOKEN_AGENTE"),
@@ -206,7 +206,7 @@ def conversation_(user_input: str, messages: list, internal_messages: list)-> tu
                 user_id=USER_ID,
                 channel_id=CHANNEL_ID,
                 is_test=True,
-                session_id=str(uuid.uuid4()),
+                session_id=session_id,
                 message_input=user_input
             )
     human_message = HumanMessage(content=user_input)
@@ -247,7 +247,7 @@ def user_evaluation(enola_id: str)-> None:
     )
     eval.add_evaluation_by_level(
         enola_id=enola_id, # Se obtiene el enola_id de la evaluación
-        eval_id="evaluacion general 0",
+        eval_id="0",
         level=user_eval,
         comment=user_comment,
     )
@@ -260,6 +260,7 @@ if __name__ == "__main__":
     messages = []
     internal_messages = []
     enola_id = None
+    session_id = str(uuid.uuid4())
     
     print("\nHola, ¿en qué puedo ayudarte? (/exit para salir, /eval para evaluar después de una respuesta)")
     while True:
@@ -274,7 +275,7 @@ if __name__ == "__main__":
                 user_evaluation(enola_id)
                 print("Gracias por tu evaluación, puedes continuar con la conversación!")
         else:
-            messages, internal_messages, enola_id = conversation_(user_input, messages, internal_messages)
+            messages, internal_messages, enola_id = conversation_(user_input, messages, internal_messages, session_id)
             
             
             
